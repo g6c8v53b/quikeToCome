@@ -1,0 +1,55 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!--    spring   加载配置文件-->
+  <!--    1 配置监听-->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!--   2 加载配置文件 -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring-*.xml</param-value>
+  </context-param>
+
+  <!--    spring mvc 基础配置-->
+  <!--在整个 Spring MVC 框架中，DispatcherServlet 处于核心位置，它负责协调和组织不同组件完成请求处理并返回响应工作。-->
+  <!--DispatcherServlet 是 SpringMVC统一的入口，所有的请求都通过它。-->
+  <!--DispatcherServlet 是前端控制器，配置在web.xml文件中，Servlet依自已定义的具体规则拦截匹配的请求，分发到-->
+  <!--目标Controller来处理.初始化 DispatcherServlet时，该框架在web应用程序WEB-INF目录中寻找一个-->
+  <!--名为[servlet-名称]-servlet.xml的文件，并在那里定义相关的Beans，重写在全局中定义的任何Beans。-->
+
+  <servlet>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring-mvc.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispatcherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <!--Post请求乱码：项目文件web.xml配置CharacterEncodingFilter(过滤器)-->
+  <filter>
+    <filter-name>characterFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+</web-app>

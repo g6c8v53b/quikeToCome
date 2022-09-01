@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--<mapper namespace="命名空间填借口">-->
+<mapper namespace="com.qf.repeat.mapper.HumanDao">
+    <resultMap id="User" type="com.qf.repeat.entity.Human">
+        <result property="born" column="born"/>
+        <result property="idCard" column="id_card"/>
+        <result property="age" column="age"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+<insert id="insert">
+    INSERT INTO human (id_card, name, age, born)
+    VALUES (#{human.idCard},#{human.name},#{human.age},#{human.born})
+    </insert>
+</mapper>

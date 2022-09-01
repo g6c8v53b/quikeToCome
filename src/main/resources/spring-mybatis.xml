@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--   1  sqlSessionFactory  注入到容器-->
+    <!--    1.1    mybatis核心配置文件(非必要)     -->
+    <!--    1.2    typeAliasesPackage  设置别名(简化代码,设置后mapper.xml只输入实现类的类名)  (非必要)    -->
+    <!--    1.3    注册所有的mapper.xml文件  (必要)-->
+    <!--    1.4   配置mybatis连接池  (必要)-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="maxActive" value="${maxActive}"/>
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation " value="classpath:mybatis-config.xml"/>
+        <property name="typeAliasesPackage" value="com.qf.repeat.entity"/>
+        <property name="mapperLocations" value="classpath:mappers/**/*.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--    2 注解所有的接口
+        basePackage   改成你的mapper  支持统配符号*
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.qf.repeat.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+</beans>
